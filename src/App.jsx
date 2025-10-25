@@ -8,26 +8,27 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
-    personService
-      .getPersons()
-      .then(response => {
-        console.log(response.data)
-        setPersons(response.data)
-      })
+    const fetchPersons = async () => {
+      const response = await personService.getPersons()
+      setPersons(response.data)
+    }
+
+    fetchPersons()
   }, [])
 
-  const matchedPersons = persons.filter(function(person) {
-    return person.name.toLowerCase().includes(filter.toLowerCase())
-  })
+  const matchedPersons = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
 
-  const handleFilter = (event) => setFilter(event.target.value)
+  const filterHandler = (event) => setFilter(event.target.value)
 
   return (
-    <div>
-      <h2>Phonebook</h2>
-      <Filter value={filter} eventHandler={handleFilter}/>
-      <h2>Numbers</h2>
-      <Persons matchedPersons={matchedPersons} allPersons={persons} setAllPersons={setPersons}/>
+    <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-md p-6">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600 text-center mb-6">
+          Contacts
+        </h2>
+        <Filter value={filter} filterHandler={filterHandler} />
+        <Persons matchedPersons={matchedPersons} />
+      </div>
     </div>
   )
 }

@@ -1,28 +1,19 @@
-import axios from "axios"
-import personService from '../services/persons'
+import Person from './Person'
 
-const Persons = ({ matchedPersons, allPersons, setAllPersons }) => {
-    const handleDeletePerson = (id, name) => {
-        if (window.confirm(`Delete ${name}`)) {
-            personService
-                .deletePerson(id)
-                .then(response => {
-                    personService
-                        .getPersons()
-                        .then(response => {
-                            setAllPersons(response.data)
-                        })
-                })
-        }
-    }
-
+const Persons = ({ matchedPersons }) => {
+  if (!matchedPersons || matchedPersons.length === 0) {
     return (
-        <>
-            {matchedPersons.map(function(person, index) {
-                return <span key={index}>{person.name} {person.phone}<button onClick={() => handleDeletePerson(person.id, person.name)}>delete</button><br /></span>
-            })}
-        </>
+      <p className="mt-4 text-gray-600 italic text-center">No matches found for the name.</p>
     )
+  }
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+      {matchedPersons.map(person => (
+        <Person key={person.id} person={person} />
+      ))}
+    </div>
+  )
 }
 
 export default Persons
