@@ -1,7 +1,7 @@
 import Person from './Person'
 
 const Persons = ({ matchedPersons }) => {
-  if (!matchedPersons || matchedPersons.length === 0) {
+  if (matchedPersons.length === 0) {
     return (
       <p className="mt-4 text-gray-600 italic text-center">No matches found for the name.</p>
     )
