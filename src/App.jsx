@@ -16,7 +16,7 @@ const App = () => {
     fetchPersons()
   }, [])
 
-  const matchedPersons = persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+  const matchedPersons = filter !== '' ? persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase())) : persons
 
   const filterHandler = (event) => setFilter(event.target.value)
 
