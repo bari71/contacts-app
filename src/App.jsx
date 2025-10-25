@@ -6,17 +6,27 @@ import personService from './services/persons'
 const App = () => {
   const [persons, setPersons] = useState([])
   const [filter, setFilter] = useState('')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchPersons = async () => {
-      const response = await personService.getPersons()
-      setPersons(response.data)
+      try {
+        const response = await personService.getPersons()
+        setPersons(response.data)
+      } finally {
+        setLoading(false)
+      }
     }
 
     fetchPersons()
   }, [])
 
-  const matchedPersons = filter !== '' ? persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase())) : persons
+  const matchedPersons =
+    filter !== ''
+      ? persons.filter(person =>
+          person.name.toLowerCase().includes(filter.toLowerCase())
+        )
+      : persons
 
   const filterHandler = (event) => setFilter(event.target.value)
 
@@ -27,7 +37,7 @@ const App = () => {
           Contacts
         </h2>
         <Filter value={filter} filterHandler={filterHandler} />
-        <Persons matchedPersons={matchedPersons} />
+        <Persons matchedPersons={matchedPersons} loading={loading} />
       </div>
     </div>
   )

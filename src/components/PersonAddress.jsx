@@ -9,6 +9,7 @@ const PersonAddress = ({ person }) => {
         <p><span className="font-medium">Suite:</span> {person.address.suite}</p>
         <p><span className="font-medium">City:</span> {person.address.city}</p>
         <p><span className="font-medium">Zip Code:</span> {person.address.zipcode}</p>
+        <p><span className="font-medium">Geolocation:</span><span className="text-md">{person.address.geo.lat}, {person.address.geo.lng}</span></p>
       </div>
     </div>
   )

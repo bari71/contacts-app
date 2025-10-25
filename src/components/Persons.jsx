@@ -1,6 +1,10 @@
 import Person from './Person'
 
-const Persons = ({ matchedPersons }) => {
+const Persons = ({ matchedPersons, loading }) => {
+  if (loading) {
+    return <p className="mt-4 text-gray-600 italic text-center">Loading contacts...</p>
+  }
+
   if (matchedPersons.length === 0) {
     return (
       <p className="mt-4 text-gray-600 italic text-center">No matches found for the name.</p>
